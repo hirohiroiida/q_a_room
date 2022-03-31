@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'questions/index'
+  get 'questions/new'
+  get 'questions/show'
+  get 'questions/edit'
   root to: 'users#index'
 
   get '/login', to: 'sessions#new'

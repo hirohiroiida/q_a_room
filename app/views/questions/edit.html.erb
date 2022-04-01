@@ -1,2 +1,4 @@
-<h1>Questions#edit</h1>
-<p>Find me in app/views/questions/edit.html.erb</p>
+<h1>質問の編集</h1>
+<%= link_to '投稿一覧へ', questions_path, class: 'nav-link' %>
+
+<%= render partial: 'form',locals: {question: @question } %>

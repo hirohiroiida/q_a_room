@@ -1,2 +1,29 @@
-<h1>Questions#show</h1>
-<p>Find me in app/views/questions/show.html.erb</p>
+<h1>質問の詳細</h1>
+<%= link_to '投稿一覧', questions_path, class: 'btn btn-primary' %>
+<%= link_to '編集', edit_question_path ,class: 'btn btn-primary' %>
+<%= link_to '削除', @question, method: :delete, data: { confirm: "質問『#{@question.title}』を削除します。よろしいですか？"}, class: 'btn btn-primary' %>
+
+<table class="table">
+  <tbody>
+    <tr>
+      <th><%= Question.human_attribute_name :id %></th>
+      <td><%= @question.id %></td>
+    </tr>
+    <tr>
+      <th><%= Question.human_attribute_name :title %></th>
+      <td><%= @question.title %></td>
+    </tr>
+    <tr>
+      <th><%= Question.human_attribute_name :body %></th>
+      <td><%= simple_format(h(@question.body), {}, sanitize: false, wrapper_tag: "div") %></td>
+    </tr>
+    <tr>
+      <th><%= Question.human_attribute_name :created_at %></th>
+      <td><%= @question.created_at %></td>
+    </tr>
+    <tr>
+      <th><%= Question.human_attribute_name :updated_at %></th>
+      <td><%= @question.updated_at %></td>
+    </tr>
+  </tbody>
+</table>

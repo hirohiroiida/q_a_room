@@ -1,9 +1,5 @@
 Rails.application.routes.draw do
-  get 'questions/index'
-  get 'questions/new'
-  get 'questions/show'
-  get 'questions/edit'
-  root to: 'users#index'
+  root to: 'questions#index'
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
@@ -16,4 +12,10 @@ Rails.application.routes.draw do
     post '/login', to: 'sessions#create'
     delete '/logout', to: 'sessions#destroy'
   end
+
+  resources :questions
+
+
+
+
 end

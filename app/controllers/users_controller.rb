@@ -19,7 +19,6 @@ class UsersController < ApplicationController
     else
       render :new
     end
-    
   end
 
   def edit
@@ -38,7 +37,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    @user.destroy
+    @user.destroy!
     redirect_to users_url, notice: "ユーザー『#{@user.name}』を削除しました"
   end
 

@@ -11,45 +11,21 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Taskleaf</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <% if current_user %>
-              <li class="nav-item">
-                <%= link_to 'ユーザー一覧', users_path, class: 'nav-link' %>
-              </li>
-              <li class="nav-item">
-                <%= link_to 'ログアウト', logout_path, method: :delete, class: 'nav-link' %>
-              </li>
-            <% else %>
-              <li class="nav-item">
-                <%= link_to 'ログイン', login_path, class: 'nav-link' %>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <%= render 'shared/header' %>
+    <%= render 'shared/alert' %>
+
     <div class="container">
 
-      <% if flash[:notice] %>
-        <div class="alert alert-primary" role="alert">
-          <p><%= notice %></p>
-        </div>
-      <% end %>
-      
-      <% if flash[:alert] %>
-        <div class="alert alert-primary" role="alert">
-          <p><%= alert %></p>
-        </div>
-      <% end %>
+
+      <div class="row">
+        <div class="col-12">横幅12分の12の領域</div>
+      </div>
+
+
+
 
       <%= yield %>
     </div>
+    <%= render 'shared/footer' %>
   </body>
 </html>

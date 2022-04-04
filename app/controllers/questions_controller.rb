@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   def index
-    @questions = Question.all
+    @questions = current_user.questions
   end
 
   def new
@@ -8,7 +8,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.new(question_params)
+    @question = current_user.questions.new(question_params)
 
     if @question.save
       redirect_to "/questions/#{@question.id}", notice: "タスク『#{@question.title}』を登録しました"
@@ -19,22 +19,22 @@ class QuestionsController < ApplicationController
   
 
   def show
-    @question = Question.find(params[:id])
+    @question = current_user.questions.find(params[:id])
   end
 
   def edit
-    @question = Question.find(params[:id])
+    @question = current_user.questions.find(params[:id])
   end
 
   def update
-    @question = Questions.find(params[:id])
+    @question = current_user.questions.find(params[:id])
     @question.update!(question_params)
     redirect_to "/questions/#{@question.id}", notice: "タスク『#{@question.title}』を更新しました"
   end
 
   def destroy
-    @question = Questions.find(params[:id])
-    @question.destroy
+    @question = current_user.questions.find(params[:id])
+    @question.destroy!
     redirect_to questions_url, notice: "タスク『#{@question.title}』を削除しました"
   end
   

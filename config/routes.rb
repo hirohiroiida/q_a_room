@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   end
 
   resources :questions do
+    collection do
+      get :solved
+      get :unsoleved
+    end
     resources :answers, only: [:create, :destroy]
   end
 

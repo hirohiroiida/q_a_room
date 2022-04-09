@@ -1,6 +1,15 @@
+<% if @answer.errors.present? %>
+  <ul class="alert alert-danger" role="alert">
+    <% @answer.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+
 <h1>質問の詳細</h1>
 <%= link_to '投稿一覧', questions_path, class: 'btn btn-primary' %>
-<%= link_to '編集', edit_question_path ,class: 'btn btn-primary' %>
+<%= link_to '編集', edit_question_path(@question),class: 'btn btn-primary' %>
 <%= link_to '削除', @question, method: :delete, data: { confirm: "質問『#{@question.title}』を削除します。よろしいですか？"}, class: 'btn btn-primary' %>
 
 <table class="table">
@@ -28,13 +37,13 @@
   </tbody>
 </table>
 
-<h2>回答</h2>
-<%= form_with model: [@question, Answer.new] do |f| %>
+<h2>解答</h2>
+<%= form_with model: [@question, @answer] do |f| %>
   <%= f.text_area :body %>
   <%= f.submit %>
 <% end %>
 
-<h2>回答一覧</h2>
+<h2>解答一覧</h2>
 <ul>
   <% @question.answers.each do |answer| %>
     <li>

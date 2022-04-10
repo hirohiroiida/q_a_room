@@ -16,7 +16,11 @@ Rails.application.routes.draw do
   resources :questions do
     collection do
       get :solved
-      get :unsoleved
+      get :unsolved
+    end
+
+    member do
+      post :solve
     end
     resources :answers, only: [:create, :destroy]
   end

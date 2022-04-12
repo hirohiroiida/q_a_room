@@ -1,16 +1,16 @@
-<h2>質問一覧</h2>
-<%= link_to '新規作成', new_question_path ,class: 'btn btn-primary' %>
+<ul class="nav nav-tabs nav-justified mb-3">
+  <li class="nav-item">
+    <%= link_to '全て', questions_path, class: 'nav-link' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to '未解決', unsolved_questions_path, class: 'nav-link' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to '解決済み', solved_questions_path, class: 'nav-link' %>
+  </li>
+</ul>
 
-
-<%= search_form_for @q do |f| %>
-  <%= f.label :title_or_body_cont, "Keyword" %>
-  <%= f.search_field :title_or_body_or_answers_body_cont %>
-  <%= f.submit "検索" %>
-<% end %>
-
-<%= link_to '全て', questions_path ,class: 'btn btn-primary' %>
-<%= link_to '未解決', unsolved_questions_path ,class: 'btn btn-primary' %>
-<%= link_to '解決済み', solved_questions_path ,class: 'btn btn-primary' %>
+<%= render partial: 'search',locals: {q: @q } %>
 
 <table class="table">
     <thead>

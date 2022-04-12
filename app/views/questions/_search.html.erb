@@ -1,6 +1,6 @@
 <%= search_form_for q do |f| %>
-  <%= f.label :title_cont, "Keyword" %>
-  <%= f.search_field :title_cont %>
-
-  <%= f.submit "検索" %>
+  <div class="d-flex gap-0 align-items-center">
+    <%= f.search_field :title_or_body_or_answers_body_cont, class: 'form-control' %>
+    <%= f.submit "検索", class: 'btn btn-primary' %>
+  </div>
 <% end %>

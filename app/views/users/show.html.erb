@@ -18,6 +18,10 @@
       <td><%= @user.email %></td>
     </tr>
     <tr>
+      <th><%= User.human_attribute_name :image %></th>
+      <td><%= image_tag @user.image if @user.image.attached? %></td>
+    </tr>
+    <tr>
       <th><%= User.human_attribute_name :admin %></th>
       <td><%= @user.admin? ? 'あり' : 'なし' %></td>
     </tr>

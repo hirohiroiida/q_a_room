@@ -1,20 +1,20 @@
 class QuestionsController < ApplicationController
   def index
     @q = Question.ransack(params[:q])
-    @questions = @q.result(distinct: true)
+    @questions = @q.result(distinct: true).page(params[:page])
     @search_path = '/questions'
   end
 
   def solved
     @q = Question.where(solved: true).ransack(params[:q])
-    @questions = @q.result(distinct: true)
+    @questions = @q.result(distinct: true).page(params[:page])
     @search_path = '/questions/solved'
     render :index
   end
   
   def unsolved
     @q = Question.where(solved: false).ransack(params[:q])
-    @questions = @q.result(distinct: true)
+    @questions = @q.result(distinct: true).page(params[:page])
     @search_path = '/questions/unsolved'
     render :index
   end

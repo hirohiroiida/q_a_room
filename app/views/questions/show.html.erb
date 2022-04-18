@@ -13,9 +13,9 @@
 <%= link_to '削除', @question, method: :delete, data: { confirm: "質問『#{@question.title}』を削除します。よろしいですか？"}, class: 'btn btn-primary' %>
 
 <% if @question.solved? %>
-    解決済み
+  <div class="badge bg-success text-wrap">解決済み</div>
 <% else %>
-    <%= link_to '解決済みにする', solve_question_path(@question), method: :post %>
+  <%= link_to '解決済みにする', solve_question_path(@question), method: :post %>
 <% end %>
 
 <table class="table">

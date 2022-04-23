@@ -28,17 +28,22 @@
             <div class="badge bg-success text-wrap">解決済み</div>
           <% else %>
             <div class="badge bg-danger text-wrap">未解決</div>
-            <%= link_to '解決済みにする', solve_question_path(@question), method: :post, data: { confirm: "解決済みにします。よろしいですか？"}, class: 'btn btn-primary btn-sm' %>
+              <% if @question.user_id == current_user.id %>
+                <%= link_to '解決済みにする', solve_question_path(@question), method: :post, data: { confirm: "解決済みにします。よろしいですか？"}, class: 'btn btn-primary btn-sm' %>
+              <% end %>
           <% end %>
         </div>
       </div>
 
       <div class="d-flex justify-content-end">
-        <div>
-          <%= link_to '編集', edit_question_path(@question),class: 'btn btn-success btn-sm' %>
-          <%= link_to '削除', @question, method: :delete, data: { confirm: "質問『#{@question.title}』を削除します。よろしいですか？"}, class: 'btn btn-danger btn-sm' %>
-        </div>
+        <% if @question.user_id == current_user.id %>
+          <div>
+            <%= link_to '編集', edit_question_path(@question),class: 'btn btn-success btn-sm' %>
+            <%= link_to '削除', @question, method: :delete, data: { confirm: "質問『#{@question.title}』を削除します。よろしいですか？"}, class: 'btn btn-danger btn-sm' %>
+          </div>
+        <% end %>
       </div>
+
       <div class="d-flex justify-content-end">
         <span class="small text-muted"><%= @question.updated_at.strftime('%Y/%m/%d %H:%M') %></span>
       </div>
@@ -52,14 +57,16 @@
 
 
 <div class="card card-body">
-  <%= form_with model: [@question, @answer] do |f| %>
-    <div class="form-group">
-      <%= f.label :body, '回答内容' %>
-      <%= f.text_area :body, class: 'form-control' %>
-      <%= f.submit '回答する', class: 'btn btn-primary d-block m-auto' %>
-    </div>
+  <% if current_user %>
+    <%= form_with model: [@question, @answer] do |f| %>
+      <div class="form-group">
+        <%= f.label :body, '回答内容' %>
+        <%= f.text_area :body, class: 'form-control' %>
+        <%= f.submit '回答する', class: 'btn btn-primary d-block m-auto' %>
+      </div>
+    <% end %>
   <% end %>
-
+  
   <hr>
   
   <ul class="list-unstyled">
@@ -67,8 +74,8 @@
       <li class="media mb-3 border-bottom pb-3">
         <div class="d-flex gap-3">
           <div class="flex-shrink-0">
-            <% if @question.user.image.attached? %>
-              <%= image_tag @question.user.image, size: '64x64', class: 'mr-3 rounded-circle' %>
+            <% if answer.user.image.attached? %>
+              <%= image_tag answer.user.image, size: '64x64', class: 'mr-3 rounded-circle' %>
             <% else %>
               <%= image_tag '64x64.png', class: 'mr-3 rounded-circle' %>
             <% end %>

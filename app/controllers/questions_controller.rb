@@ -1,4 +1,6 @@
 class QuestionsController < ApplicationController
+  skip_before_action :login_required, only: [:index, :solved, :unsolved, :show]
+
   def index
     @q = Question.ransack(params[:q])
     @questions = @q.result(distinct: true).page(params[:page])

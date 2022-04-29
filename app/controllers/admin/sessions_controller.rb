@@ -1,6 +1,5 @@
 class Admin::SessionsController < Admin::BaseController
-  def new
-  end
+  def new; end
 
   def create
     user = User.find_by(email: session_params[:email])
@@ -18,12 +17,9 @@ class Admin::SessionsController < Admin::BaseController
     redirect_to root_url, notice: 'ログアウトしました。'
   end
 
-
-
-
   private
+
   def session_params
     params.require(:session).permit(:email, :password)
   end
-
 end

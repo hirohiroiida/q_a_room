@@ -5,11 +5,11 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  resources :users, only: [:index, :new, :create, :show,  :edit] 
+  resources :users, only: %i[index new create show edit]
   namespace :admin do
-    resources :users, only: [:index, :show, :destroy]
-    resources :questions, only: [:index, :show, :destroy] do
-      resources :answers, only: [:create, :destroy]
+    resources :users, only: %i[index show destroy]
+    resources :questions, only: %i[index show destroy] do
+      resources :answers, only: %i[create destroy]
     end
     get '/login', to: 'sessions#new'
     post '/login', to: 'sessions#create'
@@ -25,10 +25,6 @@ Rails.application.routes.draw do
     member do
       post :solve
     end
-    resources :answers, only: [:create, :destroy]
+    resources :answers, only: %i[create destroy]
   end
-
-
-
-
 end

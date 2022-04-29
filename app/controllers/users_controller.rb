@@ -19,7 +19,6 @@ class UsersController < ApplicationController
     else
       render :new
     end
-    
   end
 
   def edit
@@ -28,14 +27,13 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    
+
     if @user.update(user_params)
       redirect_to user_url(@user), notice: "ユーザー『#{@user.name}』を更新しました"
     else
       render :edit
     end
   end
-
 
   private
 

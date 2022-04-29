@@ -7,9 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 user = User.create!(
-  name:  '管理者',
+  name: '管理者',
   email: 'admin@gmail.com',
-  password:  '123456',
+  password: '123456',
   password_confirmation: '123456',
   admin: true
 )
@@ -19,13 +19,13 @@ user = User.create!(
     name: Faker::JapaneseMedia::StudioGhibli.unique.character,
     email: Faker::Internet.unique.email,
     password: '123456',
-    password_confirmation: '123456',
+    password_confirmation: '123456'
   )
   puts "\"#{user.name}\" has created!"
 end
 
-User.all.each do |user|
-  user.questions.create!(
+User.all.each do |u|
+  u.questions.create!(
     title: 'タイトル',
     body: 'テキストテキストテキストテキスト'
   )

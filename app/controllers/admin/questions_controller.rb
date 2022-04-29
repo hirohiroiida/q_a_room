@@ -15,10 +15,10 @@ class Admin::QuestionsController < Admin::BaseController
     @question.destroy!
     redirect_to admin_questions_url, notice: "タスク『#{@question.title}』を削除しました"
   end
-  
+
   private
+
   def question_params
     params.require(:question).permit(:title, :body)
   end
-  
 end

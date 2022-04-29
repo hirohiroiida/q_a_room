@@ -19,6 +19,6 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_url
-    request.fullpath.include?("/admin")
+    request.fullpath.include?('/admin')
   end
 end

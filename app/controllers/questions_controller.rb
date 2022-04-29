@@ -11,7 +11,7 @@ class QuestionsController < ApplicationController
     @search_path = '/questions/solved'
     render :index
   end
-  
+
   def unsolved
     @q = Question.where(solved: false).ransack(params[:q])
     @questions = @q.result(distinct: true).page(params[:page])
@@ -24,8 +24,6 @@ class QuestionsController < ApplicationController
     @question.update!(solved: true)
     redirect_to question_path(@question), success: '解決済みにしました'
   end
-  
-  
 
   def new
     @question = Question.new
@@ -40,7 +38,6 @@ class QuestionsController < ApplicationController
       render :new
     end
   end
-  
 
   def show
     @question = Question.find(params[:id])
@@ -62,10 +59,10 @@ class QuestionsController < ApplicationController
     @question.destroy!
     redirect_to questions_url, notice: "タスク『#{@question.title}』を削除しました"
   end
-  
+
   private
+
   def question_params
     params.require(:question).permit(:title, :body)
   end
-  
 end

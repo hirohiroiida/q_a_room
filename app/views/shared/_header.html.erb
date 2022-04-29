@@ -9,6 +9,11 @@
       <div class="collapse navbar-collapse justify-content-end" id="responsiveMenu">
         <ul class="navbar-nav mr-auto">
           <% if current_user %>
+            <% if current_user.try(:admin?) %>
+              <li class="nav-item">
+                <%= link_to '管理者ログイン', admin_login_path, class: 'nav-link' %>
+              </li>
+            <% end %>
             <li class="nav-item">
               <%= link_to '質問作成', new_question_path, class: 'nav-link' %>
             </li>

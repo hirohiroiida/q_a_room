@@ -63,7 +63,7 @@ class QuestionsController < ApplicationController
     redirect_to questions_url, notice: "タスク『#{@question.title}』を削除しました"
   end
   
-  
+  private
   def question_params
     params.require(:question).permit(:title, :body)
   end

@@ -1,10 +1,4 @@
-<% if @answer.errors.present? %>
-  <ul class="alert alert-danger" role="alert">
-    <% @answer.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-    <% end %>
-  </ul>
-<% end %>
+<%= render 'questions/answer_alert', answer: @answer %>
 
 <div class="card card-body mb-5" id="question-area">
   <div class="d-flex gap-3">

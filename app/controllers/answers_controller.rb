@@ -5,7 +5,7 @@ class AnswersController < ApplicationController
       redirect_to question_path(params[:question_id]), notice: '解答しました'
     else
       @question = Question.find(params[:question_id])
-      render 'questions/show'
+      render question_path(@question)
     end
   end
 

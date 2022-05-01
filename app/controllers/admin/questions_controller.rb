@@ -1,8 +1,8 @@
 class Admin::QuestionsController < Admin::BaseController
   def index
     @q = Question.ransack(params[:q])
-    @questions = @q.result(distinct: true).page(params[:page])
-    @search_path = '/questions'
+    @questions = @q.result(distinct: true).page(params[:page]).order(created_at: :desc).includes(user: { image_attachment: :blob })
+    @search_path = questions_path
   end
 
   def show

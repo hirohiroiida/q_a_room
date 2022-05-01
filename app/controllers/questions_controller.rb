@@ -3,21 +3,22 @@ class QuestionsController < ApplicationController
 
   def index
     @q = Question.ransack(params[:q])
-    @questions = @q.result(distinct: true).page(params[:page])
-    @search_path = '/questions'
+    @questions = @q.result(distinct: true).page(params[:page]).includes(user: { image_attachment: :blob }).order(created_at: :desc)
+    @search_path = questions_path
   end
 
+  
   def solved
     @q = Question.where(solved: true).ransack(params[:q])
-    @questions = @q.result(distinct: true).page(params[:page])
-    @search_path = '/questions/solved'
+    @questions = @q.result(distinct: true).page(params[:page]).includes(user: { image_attachment: :blob }).order(created_at: :desc)
+    @search_path = solved_questions_path
     render :index
   end
 
   def unsolved
     @q = Question.where(solved: false).ransack(params[:q])
-    @questions = @q.result(distinct: true).page(params[:page])
-    @search_path = '/questions/unsolved'
+    @questions = @q.result(distinct: true).page(params[:page]).includes(user: { image_attachment: :blob }).order(created_at: :desc)
+    @search_path = unsolved_questions_path
     render :index
   end
 
@@ -35,7 +36,7 @@ class QuestionsController < ApplicationController
     @question = current_user.questions.new(question_params)
 
     if @question.save
-      redirect_to "/questions/#{@question.id}", notice: "タスク『#{@question.title}』を登録しました"
+      redirect_to question_path(@question), notice: "タスク『#{@question.title}』を登録しました"
     else
       render :new
     end
@@ -52,8 +53,11 @@ class QuestionsController < ApplicationController
 
   def update
     @question = current_user.questions.find(params[:id])
-    @question.update!(question_params)
-    redirect_to "/questions/#{@question.id}", notice: "タスク『#{@question.title}』を更新しました"
+    if @question.update(question_params)
+      redirect_to question_path(@question), notice: "タスク『#{@question.title}』を更新しました"
+    else
+      render :edit
+    end
   end
 
   def destroy

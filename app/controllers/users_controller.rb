@@ -15,23 +15,34 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to user_url(@user), notice: "ユーザー『#{@user.name}』を登録しました"
+      redirect_to user_path(@user), notice: "ユーザー『#{@user.name}』を登録しました"
     else
       render :new
     end
   end
 
   def edit
-    @user = current_user.find(params[:id])
+    u = User.find(params[:id])
+    if current_user == u
+      @user = u
+    elsif 
+      flash[:danger] = 'アカウントの編集権限がありません'
+      redirect_to questions_path
+    end
   end
 
   def update
-    @user = current_user.find(params[:id])
-
-    if @user.update(user_params)
-      redirect_to user_url(@user), notice: "ユーザー『#{@user.name}』を更新しました"
-    else
-      render :edit
+    u = User.find(params[:id])
+    if current_user == u
+      @user = u
+      if @user.update(user_params)
+        redirect_to user_path(@user), notice: "ユーザー『#{@user.name}』を更新しました"
+      else
+        render :edit
+      end
+    elsif 
+      flash[:danger] = 'アカウントの編集権限がありません'
+      redirect_to questions_path
     end
   end
 

@@ -1,17 +1,7 @@
-<% if flash[:notice] %>
-  <div class="alert alert-primary" role="alert">
-    <%= notice %>
-  </div>
-<% end %>
-
-<% if flash[:alert] %>
-  <div class="alert alert-danger" role="alert">
-    <%= alert %>
-  </div>
-<% end %>
-
-<% if flash[:success] %>
-  <div class="alert alert-success" role="alert">
-    <%= success %>
-  </div>
+<% if answer.errors.present? %>
+  <ul class="alert alert-danger" role="alert">
+    <% answer.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
 <% end %>

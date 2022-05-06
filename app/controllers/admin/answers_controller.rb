@@ -5,7 +5,7 @@ class Admin::AnswersController < Admin::BaseController
       redirect_to admin_question_path(params[:question_id]), notice: '解答しました'
     else
       @question = Question.find(params[:question_id])
-      render admin_question_path(@question)
+      render 'admin/questions/show'
     end
   end
 

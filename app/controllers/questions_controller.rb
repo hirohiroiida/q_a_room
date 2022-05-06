@@ -48,7 +48,13 @@ class QuestionsController < ApplicationController
   end
 
   def edit
-    @question = current_user.questions.find(params[:id])
+    question = Question.find(params[:id])
+    if current_user == question.user
+      @question = question
+    else
+      flash[:danger] = 'アカウントの編集権限がありません'
+      redirect_to questions_path
+    end
   end
 
   def update

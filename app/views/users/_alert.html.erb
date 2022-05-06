@@ -1,6 +1,6 @@
-<% if answer.errors.present? %>
+<% if user.present? && user.errors.present? %>
   <ul class="alert alert-danger" role="alert">
-    <% answer.errors.full_messages.each do |message| %>
+    <% user.errors.full_messages.each do |message| %>
     <li><%= message %></li>
     <% end %>
   </ul>

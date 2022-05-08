@@ -22,19 +22,16 @@ class UsersController < ApplicationController
   end
 
   def edit
-    u = User.find(params[:id])
-    if current_user == u
-      @user = u
-    elsif 
+    @user = User.find(params[:id])
+    if current_user != @user
       flash[:danger] = 'アカウントの編集権限がありません'
       redirect_to questions_path
     end
   end
 
   def update
-    u = User.find(params[:id])
-    if current_user == u
-      @user = u
+    @user = User.find(params[:id])
+    if current_user == @user
       if @user.update(user_params)
         redirect_to user_path(@user), notice: "ユーザー『#{@user.name}』を更新しました"
       else

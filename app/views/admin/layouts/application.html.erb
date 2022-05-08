@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>admin_QARoom</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="row">
+      <div class="col-3 text-white bg-dark">
+        <%= render 'admin/shared/sidebar' %>
+      </div>
+      <div class="col-9">
+        <%= render 'admin/shared/header' %>
+        <%= render 'shared/alert' %>
+        <div class="container pt-1">
+          <%= yield %>
+        </div>
+      </div>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<ul class="nav nav-tabs nav-justified mb-3">
+  <li class="nav-item">
+    <%= link_to '全て', questions_path, class: "nav-link #{ 'active' if controller.action_name == 'index'}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to '未解決', unsolved_questions_path, class: "nav-link #{ 'active' if controller.action_name == 'unsolved'}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to '解決済み', solved_questions_path, class: "nav-link #{ 'active' if controller.action_name == 'solved'}" %>
+  </li>
+</ul>
+
+<%= render partial: 'search',locals: {q: @q } %>
+
+<ul class="list-unstyled pt-5">
+  <% @questions.each do |question| %>
+    <li class="media mb-3 border-bottom pb-3">
+      <div class="d-flex gap-3">
+        <div class="flex-shrink-0">
+          <% if question.user.image.attached? %>
+            <%= image_tag question.user.image, size: '64x64', class: 'mr-3 rounded-circle' %>
+          <% else %>
+            <%= image_tag '64x64.png', class: 'mr-3 rounded-circle' %>
+          <% end %>
+        </div>
+        
+        <div>
+          <div class="d-flex gap-3">
+            <div class="media-header">
+              <h5 class="mt-0 mb-1 mr-3"><%= link_to question.title, question %></h5>
+            </div>
+            
+            <div>
+              <% if question.solved? %>
+                <div class="badge bg-success text-wrap">解決済み</div>
+              <% else %>
+                <div class="badge bg-danger text-wrap">未解決</div>
+              <% end %>
+            </div>
+
+            <div>
+              <% if user_logined && question.user_id == current_user.id %>
+                <%= link_to '編集', edit_question_path(question) ,class: 'btn btn-success btn-sm' %>
+                <%= link_to '削除', question, method: :delete, data: { confirm: "質問『#{question.title}』を削除します。よろしいですか？"}, class: 'btn btn-danger btn-sm' %>
+              <% end %>
+            </div>
+          </div>
+          <%= question.body %>
+        </div>
+      </div>
+    </li>
+  <% end %>
+</ul>
+
+<div class="d-flex justify-content-center"><%= paginate @questions %></div>
+

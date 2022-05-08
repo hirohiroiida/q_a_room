@@ -1,0 +1,32 @@
+<h1>ユーザーの詳細</h1>
+<%= link_to '一覧', users_path, class: 'btn btn-primary' %>
+<%= link_to '編集', edit_user_path ,class: 'btn btn-primary' %>
+
+<table class="table">
+  <tbody>
+    <tr>
+      <th><%= User.human_attribute_name :id %></th>
+      <td><%= @user.id %></td>
+    </tr>
+    <tr>
+      <th><%= User.human_attribute_name :name %></th>
+      <td><%= @user.name %></td>
+    </tr>
+    <tr>
+      <th><%= User.human_attribute_name :email %></th>
+      <td><%= @user.email %></td>
+    </tr>
+    <tr>
+      <th><%= User.human_attribute_name :image %></th>
+      <td><%= image_tag @user.image if @user.image.attached? %></td>
+    </tr>
+    <tr>
+      <th><%= User.human_attribute_name :created_at %></th>
+      <td><%= @user.created_at %></td>
+    </tr>
+    <tr>
+      <th><%= User.human_attribute_name :updated_at %></th>
+      <td><%= @user.updated_at %></td>
+    </tr>
+  </tbody>
+</table>

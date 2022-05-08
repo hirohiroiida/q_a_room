@@ -1,0 +1,102 @@
+<div class="card card-body mb-5" id="question-area">
+  <div class="d-flex gap-3">
+    <div class="text-center mr-3">
+      <div class="flex-shrink-0">
+        <% if @question.user.image.attached? %>
+          <%= image_tag @question.user.image, size: '64x64', class: 'mr-3 rounded-circle' %>
+        <% else %>
+          <%= image_tag '64x64.png', class: 'mr-3 rounded-circle' %>
+        <% end %>
+      </div>
+      <%= @question.user.name %>
+    </div>
+
+    <div class="flex-grow-1 d-flex flex-column justify-content-between">
+      <div class="d-flex justify-content-between">
+        <h4><%= @question.title %></h4>
+
+        <div>
+          <% if @question.solved? %>
+            <div class="badge bg-success text-wrap">解決済み</div>
+          <% else %>
+            <div class="badge bg-danger text-wrap">未解決</div>
+              <% if user_logined && @question.user_id == current_user.id %>
+                <%= link_to '解決済みにする', solve_question_path(@question), method: :post, data: { confirm: "解決済みにします。よろしいですか？"}, class: 'btn btn-primary btn-sm' %>
+              <% end %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <% if user_logined && @question.user_id == current_user.id %>
+          <div>
+            <%= link_to '編集', edit_question_path(@question),class: 'btn btn-success btn-sm' %>
+            <%= link_to '削除', @question, method: :delete, data: { confirm: "質問『#{@question.title}』を削除します。よろしいですか？"}, class: 'btn btn-danger btn-sm' %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="d-flex justify-content-end">
+        <span class="small text-muted"><%= @question.updated_at.strftime('%Y/%m/%d %H:%M') %></span>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div>
+    <%= simple_format(h(@question.body), {}, sanitize: false) %>
+  </div>
+</div>
+
+
+<div class="card card-body">
+  <% if current_user %>
+    <%= form_with model: [@question, @answer] do |f| %>
+      <%= render 'shared/alert', object: f.object %>
+      <div class="form-group">
+        <%= f.label :body, '回答内容' %>
+        <%= f.text_area :body, class: 'form-control' %>
+        <%= f.submit '回答する', class: 'btn btn-primary d-block m-auto' %>
+      </div>
+    <% end %>
+  <% end %>
+  
+  <hr>
+  
+  <ul class="list-unstyled">
+    <% @question.answers.each do |answer| %>
+      <li class="media mb-3 border-bottom pb-3">
+        <div class="d-flex gap-3">
+          <div class="flex-shrink-0">
+            <% if answer.user.image.attached? %>
+              <%= image_tag answer.user.image, size: '64x64', class: 'mr-3 rounded-circle' %>
+            <% else %>
+              <%= image_tag '64x64.png', class: 'mr-3 rounded-circle' %>
+            <% end %>
+          </div>
+
+          <div class="flex-grow-1 d-flex flex-column justify-content-between">
+            <div>
+              <div>
+                <%= answer.body %>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-end">
+              <% if answer.user_id == current_user.id %>
+                <%= link_to '削除', question_answer_path(@question, answer), method: :delete, data: { confirm: "削除します。よろしいですか？"}, class: 'btn btn-danger btn-sm' %>
+              <% end %>
+            </div>
+
+            <div class="d-flex justify-content-end">
+              <span class="small text-muted"><%= answer.created_at.strftime('%Y/%m/%d %H:%M') %></span>
+            </div>
+
+          </div>
+          
+        </div>
+        
+      </li>
+    <% end %>
+  </ul>
+</div>
+

@@ -1,0 +1,6 @@
+<%# <%= render partial: 'alert', locals: {user: @user } %>
+<h1>ユーザーの編集</h1>
+
+<%= link_to '一覧', users_path, class: 'nav-link' %>
+
+<%= render partial: 'form', locals: {user: @user } %>

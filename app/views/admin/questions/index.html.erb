@@ -1,0 +1,41 @@
+<%= render partial: 'search',locals: {q: @q } %>
+
+<ul class="list-unstyled pt-3">
+  <% @questions.each do |question| %>
+    <li class="media mb-3 border-bottom pb-3">
+      <div class="d-flex gap-3">
+        <div class="flex-shrink-0">
+          <% if question.user.image.attached? %>
+            <%= image_tag question.user.image, size: '64x64', class: 'mr-3 rounded-circle' %>
+          <% else %>
+            <%= image_tag '64x64.png', class: 'mr-3 rounded-circle' %>
+          <% end %>
+        </div>
+        
+        <div>
+          <div class="d-flex gap-3">
+            <div class="media-header">
+              <h5 class="mt-0 mb-1 mr-3"><%= link_to question.title, [:admin, question] %></h5>
+            </div>
+            
+            <div>
+              <% if question.solved? %>
+                <div class="badge bg-success text-wrap">解決済み</div>
+              <% else %>
+                <div class="badge bg-danger text-wrap">未解決</div>
+              <% end %>
+            </div>
+
+            <div>
+              <%= link_to '削除', [:admin, question], method: :delete, data: { confirm: "質問『#{question.title}』を削除します。よろしいですか？"}, class: 'btn btn-danger btn-sm' %>
+            </div>
+          </div>
+          <%= question.body %>
+        </div>
+      </div>
+    </li>
+  <% end %>
+</ul>
+
+<div class="d-flex justify-content-center"><%= paginate @questions %></div>
+

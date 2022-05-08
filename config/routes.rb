@@ -1,3 +1,30 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  root to: 'questions#index'
+
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
+
+  resources :users, only: %i[index new create show edit update]
+  namespace :admin do
+    resources :users, only: %i[index show destroy]
+    resources :questions, only: %i[index show destroy] do
+      resources :answers, only: %i[create destroy]
+    end
+    get '/login', to: 'sessions#new'
+    post '/login', to: 'sessions#create'
+    delete '/logout', to: 'sessions#destroy'
+  end
+
+  resources :questions do
+    collection do
+      get :solved
+      get :unsolved
+    end
+
+    member do
+      post :solve
+    end
+    resources :answers, only: %i[create destroy]
+  end
 end

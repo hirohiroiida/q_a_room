@@ -1,5 +1,3 @@
-<%= render 'shared/alert', answer: @answer %>
-
 <div class="card card-body mb-5" id="question-area">
   <div class="d-flex gap-3">
     <div class="text-center mr-3">
@@ -45,6 +43,7 @@
 <div class="card card-body">
   <% if current_user %>
     <%= form_with model: [:admin,@question, @answer] do |f| %>
+      <%= render 'shared/alert', object: f.object %>
       <div class="form-group">
         <%= f.label :body, '回答内容' %>
         <%= f.text_area :body, class: 'form-control' %>

@@ -9,10 +9,15 @@ class QuestionsController < ApplicationController
 
   
   def solved
-    @q = Question.where(solved: true).ransack(params[:q])
-    @questions = @q.result(distinct: true).page(params[:page]).includes(user: { image_attachment: :blob }).order(created_at: :desc)
-    @search_path = solved_questions_path
-    render :index
+    if user_logined
+      @q = Question.where(solved: true).ransack(params[:q])
+      @questions = @q.result(distinct: true).page(params[:page]).includes(user: { image_attachment: :blob }).order(created_at: :desc)
+      @search_path = solved_questions_path
+      render :index
+    else
+      redirect_to questions_path, danger: 'ログインして下さい'
+    end
+    
   end
 
   def unsolved

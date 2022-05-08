@@ -1,11 +1,16 @@
 class ApplicationController < ActionController::Base
   add_flash_types :success, :info, :warning, :danger
   helper_method :current_user
+  helper_method :user_logined
   before_action :login_required
   before_action :if_not_admin, if: :admin_url
 
   private
 
+  def user_logined
+    !!current_user
+  end
+  
   def current_user
     @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
   end
